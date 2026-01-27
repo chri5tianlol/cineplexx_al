@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axios'; // Use configured instance
 
 const EventsPage = () => {
     const [events, setEvents] = useState([]);
@@ -9,7 +9,7 @@ const EventsPage = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/events');
+                const response = await api.get('/events');
                 setEvents(response.data);
             } catch (error) {
                 console.error("Error fetching events:", error);
