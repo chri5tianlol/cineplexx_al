@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axios'; // Use configured API
 
 import LoginModal from '../components/LoginModal';
 
@@ -13,7 +13,7 @@ const EventDetailsPage = () => {
     useEffect(() => {
         const fetchEvent = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/events/${id}`);
+                const response = await api.get(`/events/${id}`);
                 setEvent(response.data);
             } catch (error) {
                 console.error("Error fetching event details:", error);
