@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axios';
 
 const AdminLoginPage = () => {
     const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ const AdminLoginPage = () => {
         e.preventDefault();
         setError('');
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+            const res = await api.post('/auth/login', { email, password });
 
             if (res.data.user.role !== 'admin' && res.data.user.role !== 'staff') {
                 setError('Access Denied. Admins and Staff only.');
