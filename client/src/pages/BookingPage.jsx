@@ -204,21 +204,20 @@ const BookingPage = () => {
             {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} />}
 
             {/* 1. HUGE HERO BANNER */}
-            {/* Increased height and adjusted padding to fix overlap */}
-            <div className="relative w-full min-h-screen lg:min-h-0 lg:h-[90vh] overflow-hidden">
+            <div className="relative w-full h-auto lg:h-[90vh] overflow-hidden">
                 {/* Backdrop Image (Blurred) */}
                 <div className="absolute inset-0 bg-cover bg-center blur-3xl opacity-40 scale-110" style={{ backgroundImage: `url(${event ? event.imageUrl : movie.posterUrl})` }}></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-[#121212]/60 to-transparent"></div>
 
-                <div className="container mx-auto px-6 h-full flex items-end pb-16 relative z-10 pt-32 lg:pt-40">
-                    <div className="flex flex-col lg:flex-row gap-12 items-end w-full">
-                        {/* Poster Card */}
-                        <div className="hidden lg:block w-72 h-[440px] shrink-0 rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.6)] relative z-20 hover:scale-105 transition-transform duration-500">
+                <div className="container mx-auto px-6 flex items-end pb-16 relative z-10 pt-32 lg:pt-40">
+                    <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center lg:items-end w-full">
+                        {/* Poster Card - Visible on Mobile now */}
+                        <div className="block w-48 h-72 lg:w-72 lg:h-[440px] shrink-0 rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.6)] relative z-20 hover:scale-105 transition-transform duration-500 bg-gray-800">
                             <img src={event ? event.imageUrl : movie.posterUrl} alt={movie.title} className="w-full h-full object-cover" />
                         </div>
 
                         {/* Info */}
-                        <div className="mb-2 space-y-5 max-w-4xl text-shadow-lg pb-4">
+                        <div className="mb-2 space-y-5 max-w-4xl text-shadow-lg pb-4 text-center lg:text-left">
                             <div className="flex gap-3 text-xs font-bold tracking-widest uppercase text-cinema-red mb-3">
                                 <span className="bg-white/10 px-4 py-1.5 rounded-full backdrop-blur-md text-white border border-white/5">{movie.genre}</span>
                                 <span className="bg-white/10 px-4 py-1.5 rounded-full backdrop-blur-md text-white border border-white/5">{movie.duration} MIN</span>
