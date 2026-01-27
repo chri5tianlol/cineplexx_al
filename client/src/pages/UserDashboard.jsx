@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import api from '../api/axios'; // Use configured API
 import ConfirmationModal from '../components/ConfirmationModal';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -32,7 +33,7 @@ const UserDashboard = () => {
 
     const fetchBookings = async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/api/user/${user.id}/bookings`);
+            const res = await api.get(`/user/${user.id}/bookings`);
             setBookings(res.data);
         } catch (error) {
             console.error('Failed to fetch bookings', error);
@@ -43,7 +44,7 @@ const UserDashboard = () => {
         e.preventDefault();
         setMessage('');
         try {
-            const res = await axios.put('http://localhost:5000/api/user/profile', {
+            const res = await api.put('/user/profile', {
                 userId: user.id,
                 name,
                 email,
@@ -67,7 +68,7 @@ const UserDashboard = () => {
     const handleCancelBooking = async () => {
         if (!bookingToCancel) return;
         try {
-            await axios.delete(`http://localhost:5000/api/bookings/${bookingToCancel}`);
+            await api.delete(`/bookings/${bookingToCancel}`);
             setBookings(bookings.filter(b => b.id !== bookingToCancel)); // Optimistic UI update
             setShowCancelModal(false);
             setBookingToCancel(null);

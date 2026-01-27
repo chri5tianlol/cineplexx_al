@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { toPng } from 'html-to-image';
 import jsPDF from 'jspdf';
 import { QRCodeCanvas } from 'qrcode.react';
-import axios from 'axios';
+import api from '../api/axios'; // Use configured API
 
 const TicketPage = () => {
     const { id } = useParams();
@@ -15,7 +15,7 @@ const TicketPage = () => {
     useEffect(() => {
         const fetchTicket = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/bookings/${id}`);
+                const res = await api.get(`/bookings/${id}`);
                 setTicket(res.data);
             } catch (error) {
                 console.error("Failed to fetch ticket", error);
@@ -44,7 +44,7 @@ const TicketPage = () => {
             pdf.save(`Cineplexx_Ticket_${ticket.seatLabel}.pdf`);
         } catch (error) {
             console.error("Download failed:", error);
-            alert(`Failed to generate PDF: ${error.message}`);
+            alert(`Failed to generate PDF: ${error.message || 'Unknown error'}`);
         } finally {
             setIsDownloading(false);
         }
@@ -76,7 +76,12 @@ const TicketPage = () => {
                     <div className="w-full md:w-[250px] h-[300px] md:h-full relative overflow-hidden shrink-0" style={{ backgroundColor: '#000000' }}>
                         {posterUrl && (
                             <>
-                                <img src={posterUrl} className="w-full h-full object-cover" style={{ opacity: 0.9 }} />
+                                <img
+                                    src={posterUrl}
+                                    crossOrigin="anonymous"
+                                    className="w-full h-full object-cover"
+                                    style={{ opacity: 0.9 }}
+                                />
                                 <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)' }} />
                             </>
                         )}
