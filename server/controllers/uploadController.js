@@ -1,55 +1,43 @@
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+require('dotenv').config();
 
-// Ensure directory exists
-const uploadDir = path.join(__dirname, '../public/uploads');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
+// Configure Cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
-// Storage Engine
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, uploadDir);
-    },
-    filename: function (req, file, cb) {
-        // Unique name: timestamp + random + ext
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, 'poster-' + uniqueSuffix + path.extname(file.originalname));
+// Configure Storage
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'cinema_posters', // Folder in Cloudinary
+        allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
+        public_id: (req, file) => {
+            // Remove extension from original name for public_id, add random suffix
+            const name = file.originalname.split('.')[0];
+            return `${name}-${Date.now()}`;
+        }
     }
 });
 
-// Check File Type
-const fileFilter = (req, file, cb) => {
-    const allowedTypes = /jpeg|jpg|png|webp/;
-    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = allowedTypes.test(file.mimetype);
-
-    if (mimetype && extname) {
-        return cb(null, true);
-    } else {
-        cb('Error: Images Only!');
-    }
-};
-
-const upload = multer({
-    storage: storage,
-    limits: { fileSize: 5000000 }, // 5MB limit
-    fileFilter: fileFilter
-}).single('image');
+const upload = multer({ storage: storage }).single('image');
 
 exports.uploadImage = (req, res) => {
     upload(req, res, (err) => {
         if (err) {
-            return res.status(400).json({ error: err.message || err });
+            console.error('Upload Error:', err);
+            return res.status(400).json({ error: err.message || 'Upload failed' });
         }
         if (!req.file) {
             return res.status(400).json({ error: 'No file selected' });
         }
 
-        // Return the public URL
-        const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-        res.json({ url: fileUrl });
+        // Return the Cloudinary URL
+        // req.file.path contains the secure cloudinary url
+        res.json({ url: req.file.path });
     });
 };
