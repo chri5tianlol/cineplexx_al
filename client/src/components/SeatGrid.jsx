@@ -18,18 +18,18 @@ const SeatGrid = ({ seats, onSeatSelect, selectedSeatLabel }) => {
                 <div className="w-full h-16 bg-gradient-to-b from-white/5 to-transparent skew-x-12 opacity-50 absolute top-8 pointer-events-none"></div>
             </div>
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-1 md:gap-3">
                 {Object.keys(rows).map(rowNum => (
-                    <div key={rowNum} className="flex gap-3 justify-center">
+                    <div key={rowNum} className="flex gap-1 md:gap-3 justify-center">
                         {/* Row Label */}
                         <div className="w-6 text-gray-600 text-xs flex items-center justify-center font-bold mr-2">{String.fromCharCode(64 + parseInt(rowNum))}</div>
 
                         {rows[rowNum].map(seat => {
-                            let baseClass = "w-10 h-10 rounded-t-lg rounded-b-md flex items-center justify-center text-xs font-bold transition-all duration-200 shadow-md border-b-2";
+                            let baseClass = "w-8 h-8 md:w-10 md:h-10 rounded-t-lg rounded-b-md flex items-center justify-center text-[10px] md:text-xs font-bold transition-all duration-200 shadow-md border-b-2";
                             let statusClass = "bg-gray-700 hover:bg-gray-600 text-gray-300 border-gray-900 cursor-pointer hover:-translate-y-1 hover:shadow-lg"; // Available
 
                             if (seat.status === 'booked') {
-                                baseClass = "w-10 h-10 rounded-md flex items-center justify-center text-xs opacity-40 shadow-none";
+                                baseClass = "w-8 h-8 md:w-10 md:h-10 rounded-md flex items-center justify-center text-[10px] md:text-xs opacity-40 shadow-none";
                                 statusClass = "bg-red-900/20 text-red-700 cursor-not-allowed border-none"; // Booked Look
                             } else if (seat.label === selectedSeatLabel) {
                                 statusClass = "bg-yellow-500 text-black border-yellow-700 shadow-[0_0_15px_#eab308] scale-110 z-10";
@@ -52,7 +52,7 @@ const SeatGrid = ({ seats, onSeatSelect, selectedSeatLabel }) => {
             </div>
 
             {/* Legend */}
-            <div className="flex gap-8 mt-12 text-sm text-gray-400">
+            <div className="flex flex-wrap justify-center gap-4 md:gap-8 mt-12 text-sm text-gray-400">
                 <div className="flex items-center gap-3"><div className="w-6 h-6 rounded bg-gray-700 border-b-2 border-gray-900"></div> Available</div>
                 <div className="flex items-center gap-3"><div className="w-6 h-6 rounded bg-yellow-500 border-b-2 border-yellow-700 shadow-[0_0_10px_#eab308]"></div> Selected</div>
                 <div className="flex items-center gap-3"><div className="w-6 h-6 rounded bg-red-900/20 text-red-700 flex items-center justify-center font-bold text-xs">X</div> Booked</div>

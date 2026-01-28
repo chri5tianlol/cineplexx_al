@@ -290,18 +290,22 @@ const BookingPage = () => {
                                     <span className="text-gray-500 text-sm uppercase tracking-widest">{hallData.hall}</span>
                                 </div>
 
-                                <div className="bg-[#151515] p-10 rounded-3xl border border-white/5 relative shadow-inner min-h-[300px] flex items-center justify-center">
+                                <div className="bg-[#151515] p-4 md:p-10 rounded-3xl border border-white/5 relative shadow-inner min-h-[300px] flex flex-col items-center justify-center overflow-hidden">
                                     {loadingSeats ? (
                                         <div className="flex flex-col items-center gap-4">
                                             <div className="w-10 h-10 border-4 border-cinema-red border-t-transparent rounded-full animate-spin"></div>
                                             <div className="text-gray-400 font-bold uppercase tracking-widest text-xs">Loading Hall Layout...</div>
                                         </div>
                                     ) : (
-                                        <SeatGrid
-                                            seats={hallData.seats}
-                                            onSeatSelect={setSelectedSeat}
-                                            selectedSeatLabel={selectedSeat?.label}
-                                        />
+                                        <div className="w-full overflow-x-auto overflow-y-hidden pb-4 custom-scrollbar">
+                                            <div className="min-w-fit mx-auto px-4">
+                                                <SeatGrid
+                                                    seats={hallData.seats}
+                                                    onSeatSelect={setSelectedSeat}
+                                                    selectedSeatLabel={selectedSeat?.label}
+                                                />
+                                            </div>
+                                        </div>
                                     )}
                                 </div>
                             </div>
