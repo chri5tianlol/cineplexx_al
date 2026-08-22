@@ -2,31 +2,31 @@
 
 A fully-featured, full-stack Cinema Management System designed to handle movie browsing, interactive seat booking, and administrative movie management. Built with modern web technologies, this project showcases a complete end-to-end user and admin experience.
 
-## 🌐 Live Demo
+## Live Demo
 
 **Check out the live application here:** [Cineplexx CMS Live](https://cineplexx-al.vercel.app)
 
 ![Cineplexx CMS Homepage Screenshot](img/Homepage_Screenshot_Cineplexx_CMS.jpeg)
 
-> **⚠️ Important Notice Regarding the Live Environment:**
+> **Important Notice Regarding the Live Environment:**
 > The backend of this application is hosted on Render's free tier. To conserve resources, Render automatically spins down free web services into an "idle mode" after 15 minutes of inactivity. 
 > 
 > **When accessing the site for the first time (or after a period of inactivity), the initial data load might take up to 50 seconds while the server wakes up.** If the movies aren't loading immediately, please be patient for a few moments and refresh the page. Everything will run smoothly and quickly once the server is awake!
 
-## 🚀 Features
+## Features
 
-### 🍿 User Experience:
+### User Experience:
 - **Movie Catalog:** Browse currently showing movies with detailed views and high-quality posters.
 - **Interactive Booking:** Select showtimes and pick seats using a dynamic, interactive seat selection grid.
 - **Authentication:** Secure user registration, robust login, and profile management.
 - **Digital Tickets:** Generates booking confirmations, complete with downloadable tickets (PDFs) and QR codes.
 
-### 🛡️ Administrative Controls:
+### Administrative Controls:
 - **Admin Dashboard:** Dedicated interface for cinema managers.
 - **Content Management:** Seamlessly add new movies, update details, and manage showtimes.
 - **Cloud Storage:** Integrated with Cloudinary for fast and reliable movie poster image uploads.
 
-## 💻 Tech Stack
+## Tech Stack
 
 **Frontend:**
 - **Framework:** React 19 (via Vite)
@@ -41,7 +41,7 @@ A fully-featured, full-stack Cinema Management System designed to handle movie b
 - **Authentication & Security:** JSON Web Tokens (JWT), bcryptjs, CORS
 - **File Uploads:** Multer, Cloudinary Integration
 
-## 🛠️ Local Setup and Installation
+## Local Setup and Installation
 
 Follow these steps to get the project running on your local machine.
 
@@ -104,5 +104,5 @@ npm run dev
 
 The frontend should now be running locally at `http://localhost:5173`.
 
-## 📜 License
+## License
 This project is open-source and available under the MIT License.
